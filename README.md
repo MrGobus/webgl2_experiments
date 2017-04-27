@@ -1,4 +1,4 @@
-# WebGL2 - Experiments
+# WebGL2 - Эксперименты
 
 [Создание контекста](context)
 
