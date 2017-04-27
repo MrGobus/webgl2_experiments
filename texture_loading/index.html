@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebGL2 - Загрузка текстуры</title>
+        <script src = "js/Shader.js"></script>
+        <script src = "js/Renderer.js"></script>
+        <script src = "js/Mesh.js"></script>
+    </head>
+    <body>
+        <h1>WebGL2 - Загрузка текстуры</h1>
+        <script>
+
+            var renderer = new Renderer({
+                width: 512,
+                height: 512,
+                shader: {
+                    vertexShaderSource: [
+                        "#version 300 es",
+                        "void main(){",
+                        "}"
+                    ].join("\n"),
+                    fragmentShaderSource: [
+                        "#version 300 es",
+                        "void main(){",
+                        "}"
+                    ].join("\n")
+                }
+            })
+
+            document.body.appendChild(renderer.canvas)
+
+            var mesh = new Mesh({
+                renderer: renderer,
+                vertices: [
+                    -0.5, -0.5, 0, 0, 0, // x, y, z, u, v
+                    -0.5,  0.5, 0, 0, 1,
+                     0.5, -0.5, 0, 1, 0,
+                     0.5,  0.5, 0, 1, 1
+                ],
+                indices: [0, 1, 2, 3]
+            })
+
+            renderer.render()
+
+        </script>
+    </body>
+</html>

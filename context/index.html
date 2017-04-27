@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebGL2 - Создание контекста</title>
+    </head>
+    <body>
+        <h1>WebGL2 - Создание контекста</h1>
+        <script>
+
+            // Канва
+            
+            var canvas = document.createElement("canvas")
+            canvas.width = 512
+            canvas.height = 512
+            document.body.appendChild(canvas)
+
+            // Контекст
+
+            var gl = canvas.getContext("webgl2")
+
+            // Очистка экрана
+
+            gl.clearColor(1, 1, 0, 1)
+            gl.clear(gl.COLOR_BUFFER_BIT)
+
+        </script>
+    </body>
+</html>
