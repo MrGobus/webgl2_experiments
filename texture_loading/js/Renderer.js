@@ -1,6 +1,7 @@
 class Renderer {
 
     /*
+        @param param.context - параметры контекста
         @param param.width - ширина канвы
         @param param.height - высота канвы
         @param param.shader - параметры шейдера
@@ -11,12 +12,14 @@ class Renderer {
         // Канва
 
         this.canvas = document.createElement("canvas")
-        this.width = param.width != undefined ? param.width : 512
-        this.height = param.height != undefined ? param.height : 512
+        this.canvas.width = param.width != undefined ? param.width : 512
+        this.canvas.height = param.height != undefined ? param.height : 512
 
         // Контекст
 
-        this.context = this.canvas.getContext("webgl2", param.context)
+        this.context = this.canvas.getContext("webgl2", param.context != undefined ? param.context : {
+            alpha: false
+        })
 
         // Шейдер
 
@@ -29,10 +32,6 @@ class Renderer {
         }
 
         this.shader = new Shader(param.shader)
-
-    }
-
-    render() {
 
     }
 

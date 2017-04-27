@@ -11,18 +11,30 @@
         <h1>WebGL2 - Загрузка текстуры</h1>
         <script>
 
+            // Рендерер
+
             var renderer = new Renderer({
                 width: 512,
                 height: 512,
                 shader: {
                     vertexShaderSource: [
                         "#version 300 es",
+                        "in vec3 vertexPosition;",
+                        "in vec2 vertexTexCoord;",
+                        "out vec2 fragTexCoord;",
                         "void main(){",
+                            "fragTexCoord = vertexTexCoord;",
+                            "gl_Position = vec4(vertexPosition, 1);",
                         "}"
                     ].join("\n"),
                     fragmentShaderSource: [
                         "#version 300 es",
+                        "precision highp float;",
+                        "uniform sampler2D textureSampler;",
+                        "in vec2 fragTexCoord;",
+                        "out vec4 fragColor;",
                         "void main(){",
+                            "fragColor = texture(textureSampler, fragTexCoord);",
                         "}"
                     ].join("\n")
                 }
@@ -30,18 +42,48 @@
 
             document.body.appendChild(renderer.canvas)
 
+            // Меш
+
             var mesh = new Mesh({
                 renderer: renderer,
                 vertices: [
-                    -0.5, -0.5, 0, 0, 0, // x, y, z, u, v
-                    -0.5,  0.5, 0, 0, 1,
-                     0.5, -0.5, 0, 1, 0,
-                     0.5,  0.5, 0, 1, 1
+                    -0.5, -0.5, 0, 0, 1, // x, y, z, u, v
+                    -0.5,  0.5, 0, 0, 0,
+                     0.5, -0.5, 0, 1, 1,
+                     0.5,  0.5, 0, 1, 0
                 ],
                 indices: [0, 1, 2, 3]
             })
 
-            renderer.render()
+            var gl = renderer.context
+
+            // Загрузка текстуры
+
+            var texture = gl.createTexture()
+            var image = new Image()
+
+            image.onload = () => {
+
+                // Настройка текстуры
+
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+
+                // Рендер
+
+                gl.clearColor(0.2, 0.2, 0.2, 1.0)
+                gl.clear(gl.COLOR_BUFFER_BIT)
+                gl.useProgram(renderer.shader.program)
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                mesh.draw()
+
+            }
+
+            image.src = "texture.jpg"
+
+            // Отображение
 
         </script>
     </body>
