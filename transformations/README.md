@@ -84,9 +84,10 @@ matrix[10] =   cosYaw * cosPitch
 
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_euler.html)
 
-### Поворот вокруг вектора (glRotate)
+### Поворот вокруг вектора (glRotate(x, y, z, angle))
 
 c = cos(angle)
+
 s = sin(angle)
 
 |                         |                         |                         |   |
@@ -95,3 +96,35 @@ s = sin(angle)
 | x * y * (1 - c) + z * s | y * y * (1 - c) + c     | y * z * (1 - c) - x * s | 0 |
 | x * z * (1 - c) + y * s | y * z * (1 - c) + x * s | z * z * (1 - c) + c     | 0 |
 |                       0 |                       0 |                       0 | 1 |
+
+```javascript
+var x = document.getElementById("x").value
+var y = document.getElementById("y").value
+var z = document.getElementById("z").value
+
+var angle = new Date().getTime() / 1000
+
+var invLength = 1.0 / Math.sqrt(x * x + y * y + z * z)
+x *= invLength
+y *= invLength
+z *= invLength
+
+var c = Math.cos(angle)
+var s = Math.sin(angle)
+
+var c1 = 1 - c
+
+matrix[ 0] = x * x * c1 + c
+matrix[ 1] = x * y * c1 - z * s
+matrix[ 2] = x * z * c1 + y * s
+
+matrix[ 4] = x * y * c1 + z * s
+matrix[ 5] = y * y * c1 + c
+matrix[ 6] = y * z * c1 - x * s
+
+matrix[ 8] = x * z * c1 - y * s
+matrix[ 9] = y * z * c1 + x * s
+matrix[10] = z * z * c1 + c
+```
+
+[Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate.html)
