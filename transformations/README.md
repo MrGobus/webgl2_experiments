@@ -74,9 +74,11 @@ var sinRoll = Math.sin(roll)
 matrix[ 0] =   cosYaw * cosRoll + sinYaw * sinPitch * sinRoll
 matrix[ 1] =   sinRoll * cosPitch
 matrix[ 2] = - sinYaw * cosRoll + cosYaw * sinPitch * sinRoll
+
 matrix[ 4] = - cosYaw * sinRoll + sinYaw * sinPitch * cosRoll
 matrix[ 5] =   cosRoll * cosPitch
 matrix[ 6] =   sinRoll * sinYaw + cosYaw * sinPitch * cosRoll
+
 matrix[ 8] =   sinYaw * cosPitch
 matrix[ 9] = - sinPitch
 matrix[10] =   cosYaw * cosPitch
