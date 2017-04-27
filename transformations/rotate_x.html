@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebGL2 - Трансформации - Повтор вокруг оси Z</title>
+        <script src = "js/Shader.js"></script>
+        <script src = "js/Renderer.js"></script>
+        <script src = "js/Mesh.js"></script>    </head>
+    <body>
+        <h1>WebGL2 - Трансформации - Повтор вокруг оси Z</h1>
+        <script>
+
+                // Рендерер
+
+                var renderer = new Renderer({
+                    width: 512,
+                    height: 512,
+                    shader: {
+                        vertexShaderSource: [
+                            "#version 300 es",
+                            "in vec3 vertexPosition;",
+                            "in vec2 vertexTexCoord;",
+                            "uniform mat4 modelviewMatrix;",
+                            "out vec2 fragTexCoord;",
+                            "void main(){",
+                                "fragTexCoord = vertexTexCoord;",
+                                "gl_Position = modelviewMatrix * vec4(vertexPosition, 1);",
+                            "}"
+                        ].join("\n"),
+                        fragmentShaderSource: [
+                            "#version 300 es",
+                            "precision highp float;",
+                            "uniform sampler2D textureSampler;",
+                            "in vec2 fragTexCoord;",
+                            "out vec4 fragColor;",
+                            "void main(){",
+                                "fragColor = texture(textureSampler, fragTexCoord);",
+                            "}"
+                        ].join("\n")
+                    }
+                })
+
+                document.body.appendChild(renderer.canvas)
+
+                // Меш
+
+                var mesh = new Mesh({
+                    renderer: renderer,
+                    vertices: [
+                        -0.5, -0.5, 0, 0, 1, // x, y, z, u, v
+                        -0.5,  0.5, 0, 0, 0,
+                         0.5, -0.5, 0, 1, 1,
+                         0.5,  0.5, 0, 1, 0
+                    ],
+                    indices: [0, 1, 2, 3]
+                })
+
+                var gl = renderer.context
+
+                // Загрузка текстуры
+
+                var texture = gl.createTexture()
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([128, 128, 128, 255]))
+
+                var image = new Image()
+
+                image.onload = () => {
+
+                    gl.bindTexture(gl.TEXTURE_2D, texture)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+                    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+
+                }
+
+                image.src = "texture.jpg"
+
+                // Рендер сцены
+
+                var matrix = new Float32Array([
+                    1, 0, 0, 0,
+                    0, 1, 0, 0,
+                    0, 0, 1, 0,
+                    0, 0, 0, 1
+                ])
+
+                function renderScene() {
+
+                    // Запрос рендера следующего кадра
+
+                    requestAnimationFrame(renderScene)
+
+                    // Очистка экрана
+
+                    gl.clearColor(0.2, 0.2, 0.2, 1.0)
+                    gl.clear(gl.COLOR_BUFFER_BIT)
+
+                    // Включаем шейдер
+
+                    gl.useProgram(renderer.shader.program)
+
+                    // Установка текстуры
+
+                    gl.bindTexture(gl.TEXTURE_2D, texture)
+
+                    // Матрица
+
+                    var angle = new Date().getTime() / 1000
+                    var cosAngle = Math.sin(angle)
+                    var sinAngle = Math.cos(angle)
+
+                    matrix[5] = cosAngle
+                    matrix[6] = -sinAngle
+                    matrix[9] = sinAngle
+                    matrix[10] = cosAngle
+
+                    gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, matrix)
+
+                    // Рисуем меш
+
+                    mesh.draw()
+
+                }
+
+                renderScene()
+
+        </script>
+    </body>
+</html>
