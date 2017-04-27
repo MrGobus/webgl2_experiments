@@ -9,24 +9,6 @@
 |0|0|1|0|
 |x|y|z|1|
 
-### Описание матрицы
-
-```javascript
-var matrix = new Float32Array([
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 0, 1
-])
-```
-
-### Установка матрицы
-
-```javascript
-matrix[12] = Math.sin(new Date().getTime() / 1000)
-gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, matrix)
-```
-
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/translate.html)
 
 ## Масштаб
@@ -37,13 +19,6 @@ gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, m
 |0|y|0|0|
 |0|0|z|0|
 |0|0|0|1|
-
-### Установка матрицы
-
-```javascript
-matrix[0] = matrix[5] = matrix[10] = Math.abs(Math.sin(new Date().getTime() / 1000))
-gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, matrix)
-```
 
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/scale.html)
 
