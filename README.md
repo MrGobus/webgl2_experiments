@@ -1,13 +1,13 @@
 # WebGL2 - Эксперименты
 
-[Создание контекста](context)
+[Создание контекста](context/README.md)
 
-[Шейдер](context)
+[Шейдер](context/README.md)
 
-[VAO (Vertex Array Object)](vao)
+[VAO (Vertex Array Object)](vao/README.md)
 
-[Текстура](texture)
+[Текстура](texture/README.md)
 
-[Загрузка текстуры](texture_loading)
+[Загрузка текстуры](texture_loading/README.md)
 
-[Трансформации](transformations)
+[Трансформации](transformations/README.md)
