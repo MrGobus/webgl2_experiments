@@ -83,3 +83,15 @@ matrix[10] =   cosYaw * cosPitch
 ```
 
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_euler.html)
+
+###
+
+c = cos(angle)
+s = sin(angle)
+
+|                         |                         |                         |   |
+|-------------------------|-------------------------|-------------------------|---|
+| x * x * (1 - c) + c     | x * y * (1 - c) - z * s | x * z * (1 - c) + y * s | 0 |
+| x * y * (1 - c) + z * s | y * y * (1 - c) + c     | y * z * (1 - c) - x * s | 0 |
+| x * z * (1 - c) + y * s | y * z * (1 - c) + x * s | z * z * (1 - c) + c     | 0 |
+|                       0 |                       0 |                       0 | 1 |
