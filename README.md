@@ -9,3 +9,5 @@
 [Текстура](texture)
 
 [Загрузка текстуры](texture_loading)
+
+[Трансформации](transformation)
