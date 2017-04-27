@@ -56,3 +56,30 @@
 |          0|          0|0|1|
 
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_z.html)
+
+### WebGL2 - Трансформации - Поворот на углы Эйлера
+
+```javascript
+var yaw = new Date().getTime() / 1000
+var pitch = new Date().getTime() / 1000
+var roll = new Date().getTime() / 1000
+
+var cosYaw = Math.cos(yaw)
+var sinYaw = Math.sin(yaw)
+var cosPitch = Math.cos(pitch)
+var sinPitch = Math.sin(pitch)
+var cosRoll = Math.cos(roll)
+var sinRoll = Math.sin(roll)
+
+matrix[ 0] =   cosYaw * cosRoll + sinYaw * sinPitch * sinRoll
+matrix[ 1] =   sinRoll * cosPitch
+matrix[ 2] = - sinYaw * cosRoll + cosYaw * sinPitch * sinRoll
+matrix[ 4] = - cosYaw * sinRoll + sinYaw * sinPitch * cosRoll
+matrix[ 5] =   cosRoll * cosPitch
+matrix[ 6] =   sinRoll * sinYaw + cosYaw * sinPitch * cosRoll
+matrix[ 8] =   sinYaw * cosPitch
+matrix[ 9] = - sinPitch
+matrix[10] =   cosYaw * cosPitch
+```
+
+[Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_euler.html)
