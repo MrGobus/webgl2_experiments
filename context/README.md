@@ -1,6 +1,6 @@
 # WebGL2 - Создание контекста
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/context/)
+[Пример](https://mrgobus.github.io/webgl2_experiments/context/context.html)
 
 ## Создание
 

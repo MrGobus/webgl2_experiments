@@ -1,6 +1,6 @@
 # WebGL2 - VAO (Vertex Array Object)
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/vao/)
+[Пример](https://mrgobus.github.io/webgl2_experiments/vao/vao.html)
 
 ## Создание
 

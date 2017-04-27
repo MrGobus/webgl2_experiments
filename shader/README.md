@@ -1,6 +1,6 @@
 # WebGL2 - Шейдер
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/shader/)
+[Пример](https://mrgobus.github.io/webgl2_experiments/shader/shader.html)
 
 ## Создание
 

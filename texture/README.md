@@ -1,6 +1,6 @@
 # WebGL2 - Текстура
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/texture/)
+[Пример](https://mrgobus.github.io/webgl2_experiments/texture/texture.html)
 
 ## Создание
 
