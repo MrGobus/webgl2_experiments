@@ -2,8 +2,6 @@
 
 ## Сдвиг
 
-### Матрица
-
 | | | | |
 |-|-|-|-|
 |1|0|0|0|
@@ -32,8 +30,6 @@ gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, m
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/translate.html)
 
 ## Масштаб
-
-### Матрица
 
 | | | | |
 |-|-|-|-|
