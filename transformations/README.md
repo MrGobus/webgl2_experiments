@@ -84,7 +84,7 @@ matrix[10] =   cosYaw * cosPitch
 
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_euler.html)
 
-###
+### Поворот вокруг вектора (glRotate)
 
 c = cos(angle)
 s = sin(angle)
