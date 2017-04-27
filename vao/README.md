@@ -1,5 +1,7 @@
 # WebGL2 - VAO (Vertex Array Object)
 
+[Пример](https://mrgobus.github.io/webgl2_experiments/vao/)
+
 ## Создание
 
 Создаем и устанавливаем вершинный массив

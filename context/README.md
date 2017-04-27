@@ -1,5 +1,7 @@
 # WebGL2 - Создание контекста
 
+[Пример](https://mrgobus.github.io/webgl2_experiments/context/)
+
 ## Создание
 
 Создаем html элемент *canvas* размером 512x512 и добавляем его на страницу

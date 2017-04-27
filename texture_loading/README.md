@@ -1,5 +1,7 @@
 # WebGL2 - Загрузка текстуры
 
+[Пример](https://mrgobus.github.io/webgl2_experiments/texture_loading/)
+
 ## Создание
 
 ```javascript
