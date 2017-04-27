@@ -29,7 +29,7 @@ matrix[12] = Math.sin(new Date().getTime() / 1000)
 gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, matrix)
 ```
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/transformation/translate.html)
+[Пример](https://mrgobus.github.io/webgl2_experiments/transformations/translate.html)
 
 ## Масштаб
 
@@ -49,7 +49,7 @@ matrix[0] = matrix[5] = matrix[10] = Math.abs(Math.sin(new Date().getTime() / 10
 gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, matrix)
 ```
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/transformation/scale.html)
+[Пример](https://mrgobus.github.io/webgl2_experiments/transformations/scale.html)
 
 ## Поворот
 
@@ -62,7 +62,7 @@ gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, m
 |0|sin(angle)| cos(angle)|0|
 |0|         0|          0|1|
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/transformation/rotate_x.html)
+[Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_x.html)
 
 ### Поворот вокруг оси Y
 
@@ -73,7 +73,7 @@ gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, m
 |-sin(angle)|0|cos(angle)|0|
 |          0|0|         0|1|
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/transformation/rotate_y.html)
+[Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_y.html)
 
 ### Поворот вокруг оси Z
 
@@ -84,6 +84,4 @@ gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, m
 |          0|          1|0|0|
 |          0|          0|0|1|
 
-[Пример](https://mrgobus.github.io/webgl2_experiments/transformation/rotate_z.html)
-
-[Пример](https://mrgobus.github.io/webgl2_experiments/transformation/rotate.html)
+[Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_z.html)
