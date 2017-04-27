@@ -10,4 +10,4 @@
 
 [Загрузка текстуры](texture_loading)
 
-[Трансформации](transformation)
+[Трансформации](transformations)
