@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebGL2 - Трансформации - Перенос + Масштаб + Поворот</title>
+        <script src = "js/Shader.js"></script>
+        <script src = "js/Renderer.js"></script>
+        <script src = "js/Mesh.js"></script>
+    </head>
+    <body>
+        <h1>WebGL2 - Трансформации - Перенос + Масштаб + Поворот</h1>
+        <script>
+
+            // Рендерер
+
+            var renderer = new Renderer({
+                width: 512,
+                height: 512,
+                shader: {
+                    vertexShaderSource: [
+                        "#version 300 es",
+                        "in vec3 vertexPosition;",
+                        "in vec2 vertexTexCoord;",
+                        "uniform mat4 modelviewMatrix;",
+                        "out vec2 fragTexCoord;",
+                        "void main(){",
+                            "fragTexCoord = vertexTexCoord;",
+                            "gl_Position = modelviewMatrix * vec4(vertexPosition, 1);",
+                        "}"
+                    ].join("\n"),
+                    fragmentShaderSource: [
+                        "#version 300 es",
+                        "precision highp float;",
+                        "uniform sampler2D textureSampler;",
+                        "in vec2 fragTexCoord;",
+                        "out vec4 fragColor;",
+                        "void main(){",
+                            "fragColor = texture(textureSampler, fragTexCoord);",
+                        "}"
+                    ].join("\n")
+                }
+            })
+
+            document.body.appendChild(renderer.canvas)
+
+            // Меш
+
+            var mesh = new Mesh({
+                renderer: renderer,
+                vertices: [
+                    -0.5, -0.5, 0, 0, 1, // x, y, z, u, v
+                    -0.5,  0.5, 0, 0, 0,
+                     0.5, -0.5, 0, 1, 1,
+                     0.5,  0.5, 0, 1, 0
+                ],
+                indices: [0, 1, 2, 3]
+            })
+
+            var gl = renderer.context
+
+            // Загрузка текстуры
+
+            var texture = gl.createTexture()
+            gl.bindTexture(gl.TEXTURE_2D, texture)
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([128, 128, 128, 255]))
+
+            var image = new Image()
+
+            image.onload = () => {
+
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
+                gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image)
+
+            }
+
+            image.src = "texture.jpg"
+
+            // Рендер сцены
+
+            var matrix = new Float32Array([
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+            ])
+
+            function renderScene() {
+
+                // Запрос рендера следующего кадра
+
+                requestAnimationFrame(renderScene)
+
+                // Очистка экрана
+
+                gl.clearColor(0.2, 0.2, 0.2, 1.0)
+                gl.clear(gl.COLOR_BUFFER_BIT)
+
+                // Включаем шейдер
+
+                gl.useProgram(renderer.shader.program)
+
+                // Установка текстуры
+
+                gl.bindTexture(gl.TEXTURE_2D, texture)
+
+                // Матрица
+
+                var yaw = 0
+                var pitch = 0
+                var roll = new Date().getTime() / 1000
+
+                var s = Math.abs(Math.sin(new Date().getTime() / 500)) + 1
+
+                var scaleX = s
+                var scaleY = s
+                var scaleZ = s
+
+                var translateX = Math.sin(new Date().getTime() / 1000)
+                var translateY = 0
+                var translateZ = 0
+
+                var cosYaw = Math.cos(yaw)
+                var sinYaw = Math.sin(yaw)
+                var cosPitch = Math.cos(pitch)
+                var sinPitch = Math.sin(pitch)
+                var cosRoll = Math.cos(roll)
+                var sinRoll = Math.sin(roll)
+
+                matrix[ 0] = scaleX * (cosYaw * cosRoll + sinYaw * sinPitch * sinRoll)
+            	matrix[ 1] = scaleY * (sinRoll * cosPitch)
+            	matrix[ 2] = scaleZ * (-sinYaw * cosRoll + cosYaw * sinPitch * sinRoll)
+
+            	matrix[ 4] = scaleX * (-cosYaw * sinRoll + sinYaw * sinPitch * cosRoll)
+            	matrix[ 5] = scaleY * (cosRoll * cosPitch)
+            	matrix[ 6] = scaleZ * (sinRoll * sinYaw + cosYaw * sinPitch * cosRoll)
+
+            	matrix[ 8] = scaleX * (sinYaw * cosPitch)
+            	matrix[ 9] = scaleY * (-sinPitch)
+            	matrix[10] = scaleZ * (cosYaw * cosPitch)
+
+                matrix[12] = translateX
+                matrix[13] = translateY
+                matrix[14] = translateZ
+
+                gl.uniformMatrix4fv(renderer.shader.uniformLocation["modelviewMatrix"], false, matrix)
+
+                // Рисуем меш
+
+                mesh.draw()
+
+            }
+
+            renderScene()
+
+        </script>
+    </body>
+</html>

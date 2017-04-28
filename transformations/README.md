@@ -57,7 +57,7 @@
 
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_z.html)
 
-### WebGL2 - Трансформации - Поворот на углы Эйлера
+### Поворот на углы Эйлера
 
 ```javascript
 var yaw = new Date().getTime() / 1000
@@ -85,6 +85,49 @@ matrix[10] =   cosYaw * cosPitch
 ```
 
 [Пример](https://mrgobus.github.io/webgl2_experiments/transformations/rotate_euler.html)
+
+### Перенос + Масштаб + Поворот
+
+```javascript
+var yaw = 0
+var pitch = 0
+var roll = new Date().getTime() / 1000
+
+var s = Math.abs(Math.sin(new Date().getTime() / 500)) + 1
+
+var scaleX = s
+var scaleY = s
+var scaleZ = s
+
+var translateX = Math.sin(new Date().getTime() / 1000)
+var translateY = 0
+var translateZ = 0
+
+var cosYaw = Math.cos(yaw)
+var sinYaw = Math.sin(yaw)
+var cosPitch = Math.cos(pitch)
+var sinPitch = Math.sin(pitch)
+var cosRoll = Math.cos(roll)
+var sinRoll = Math.sin(roll)
+
+matrix[ 0] = scaleX * (cosYaw * cosRoll + sinYaw * sinPitch * sinRoll)
+matrix[ 1] = scaleY * (sinRoll * cosPitch)
+matrix[ 2] = scaleZ * (-sinYaw * cosRoll + cosYaw * sinPitch * sinRoll)
+
+matrix[ 4] = scaleX * (-cosYaw * sinRoll + sinYaw * sinPitch * cosRoll)
+matrix[ 5] = scaleY * (cosRoll * cosPitch)
+matrix[ 6] = scaleZ * (sinRoll * sinYaw + cosYaw * sinPitch * cosRoll)
+
+matrix[ 8] = scaleX * (sinYaw * cosPitch)
+matrix[ 9] = scaleY * (-sinPitch)
+matrix[10] = scaleZ * (cosYaw * cosPitch)
+
+matrix[12] = translateX
+matrix[13] = translateY
+matrix[14] = translateZ
+```
+
+[Пример](https://mrgobus.github.io/webgl2_experiments/transformations/translate_scale_rotate.html)
 
 ### Поворот вокруг вектора (glRotate(x, y, z, angle))
 
