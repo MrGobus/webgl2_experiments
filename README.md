@@ -2,7 +2,7 @@
 
 [Создание контекста](context)
 
-[Шейдер](context)
+[Шейдер](shader)
 
 [VAO (Vertex Array Object)](vao)
 
